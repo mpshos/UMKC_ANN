@@ -7,7 +7,7 @@ labels = load('data\T.mat');
 labels = (labels.T + 1) / 2;
 
 % Normalize data
-samples_nrm = normc(samples);
+samples_nrm = normr(samples);
 
 %% Set up network
 
@@ -32,11 +32,17 @@ preds = sim(net, samples_nrm);
 
 % Use threshold to determine class
 preds(preds >= 0.5) = 1;
-preds(pred < 0.5) = 0;
+preds(preds < 0.5) = 0;
 
 % Calculate and plot ROC AUC
 [X, Y, T, AUC] = perfcurve(labels, preds, 1);
 
 disp(AUC);
 
+figure(1);
 plot(X, Y);
+
+figure(2);
+confusionchart(labels, preds);
+
+save('models\task_1_v2.mat', 'net');
