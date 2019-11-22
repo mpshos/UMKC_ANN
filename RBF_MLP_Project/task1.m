@@ -1,7 +1,7 @@
 %% Read data
-samples = load('data\P.mat');
+samples = load('data/P.mat');
 samples = samples.P;
-labels = load('data\T.mat');
+labels = load('data/T.mat');
 
 % Convert labels to boolean
 labels = (labels.T + 1) / 2;

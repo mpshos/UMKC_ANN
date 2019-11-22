@@ -1,11 +1,11 @@
 %% Read data
-samples = load('data\heart_P.mat');
+samples = load('data/heart_P.mat');
 samples = samples.heart_P;
-labels = load('data\heart_T.mat');
+labels = load('data/heart_T.mat');
 labels = labels.heart_T;
 
 % Normalize data
-% samples_nrm = normr(samples);
+samples_nrm = normr(samples);
 
 %% Set up network
 
@@ -43,4 +43,4 @@ plot(X, Y);
 figure(2);
 confusionchart(labels, preds);
 
-save('models\task_3_v1.mat', 'net');
+save('models/task_3_v2.mat', 'net');
