@@ -1,9 +1,9 @@
-function [best_net, trainMse, valMse] = eval_spreads(trainP,trainT, valP, valT, spreads)
+function [net, trainMse, valMse] = eval_spreads(trainP,trainT, valP, valT, spreads)
 %EVAL_SPREADS Create an exact RBF for each provided spread
 % Initialize
 trainMse = zeros(length(spreads));
 valMse = zeros(length(spreads));
-least_sum_mse = 100;
+least_sum_mse = 
 
 for i = 1 : length(spreads)
    % Create/train network
@@ -15,13 +15,9 @@ for i = 1 : length(spreads)
     ytr = sim(net, trainP);
     trainMse(i) = mse(ytr - trainT);
     
-    if (valMse(i) + trainMse(i)) < least_sum_mse
-        least_sum_mse = valMse(i) + trainMse(i);
-        best_net = net;
-    end
-   
+    
 end
 
-end
 
+end
 
