@@ -13,17 +13,11 @@ T = (labels.T + 1) / 2;
 % Normalize data
 % samples_nrm = normc(samples);
 
-%% Set up networks
-% net1 = newrbe(trainP,trainT,3.0);
-% 
-% y1v = sim(net1,valP);
-% mse1v=mse(y1v-valT);
-% 
-% [net, spread] = best_spread_rbe(trainP, trainT, valP, valT, [0.05, 0.1, 0.25, 0.33, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]);
+%% Train a bunch of RBFs
 
-spreads = 0.05 : 0.1 : 10;
+spreads = 0.05 : 0.1 : 50;
 
-[net, trainMse, valMse] = eval_spreads(trainP, trainT, valP, valT, spreads);
+[net, best_spread, trainMse, valMse] = eval_spreads(trainP, trainT, valP, valT, spreads);
 
 figure(1)
 plot(spreads, trainMse);
@@ -34,22 +28,23 @@ plot(spreads, valMse);
 title('Validation MSE vs Spread');
 
 
-% preds = sim(net, testP);
+preds = sim(net, testP);
 
-% figure(1)
-% plotroc(testT, testP);
-% 
-% % Use threshold to determine class
-% preds(preds >= 0.5) = 1;
-% preds(preds < 0.5) = 0;
-% 
-% % Calculate and plot ROC AUC
-% [X, Y, T, AUC] = perfcurve(valT, preds, 1);
-% 
-% disp(AUC);
-% 
-% figure(2);
-% confusionchart(valT, preds);
+figure(3)
+plotroc(testT, testP);
+
+% Use threshold to determine class
+preds(preds >= 0.5) = 1;
+preds(preds < 0.5) = 0;
+
+% Calculate and plot ROC AUC
+[X, Y, T, AUC] = perfcurve(valT, preds, 1);
+
+disp(AUC);
+disp(best_spread);
+
+figure(4);
+confusionchart(valT, preds);
 
 
 
