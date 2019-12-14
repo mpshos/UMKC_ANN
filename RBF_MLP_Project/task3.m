@@ -59,7 +59,7 @@ train_fcn = 'trainlm';
 hidden_layer_1_sz = 64;
 hidden_layer_2_sz = 10;
 
-net = fitnet([hidden_layer_1_sz, hidden_layer_2_sz], train_fcn);
+net = fitnet([64, 10], train_fcn);
 
 net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
@@ -68,12 +68,12 @@ net.divideParam.testRatio = 15/100;
 net.performFcn = 'mse';
 
 %% Train Network
-% [best_net, best_roc] = eval_mlp_network(net, samples, labels, 10);
-[net,tr] = train(net,samples,labels);
+[best_net, best_roc] = eval_mlp_network(net, samples, labels, 10);
+% [net,tr] = train(net,samples,labels);
 
 %% Calculate performance
 % Run all samples through network and get output
-preds = sim(net, samples);
+preds = sim(best_net, samples);
 
 % Use threshold to determine class
 preds(preds >= 0.5) = 1;
