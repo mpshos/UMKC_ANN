@@ -30,15 +30,15 @@ train_labels = source_labels';
 hiddenLayer1Size = 64; % total number of nodes in the hidden layer 1
 hiddenLayer2Size = 24; % total number of nodes in the hidden layer 2
 
-trainNet = 1;
+trainNet = 0;
 
 if trainNet
     % create a FitNet Feedforward Network
     net = patternnet([hiddenLayer1Size hiddenLayer2Size],'trainrp');
 
     % division of the inputdata is done automatically in this configuration
-    net.divideParam.trainRatio = 60/100;
-    net.divideParam.valRatio = 25/100;
+    net.divideParam.trainRatio = 70/100;
+    net.divideParam.valRatio = 15/100;
     net.divideParam.testRatio = 15/100;
     net.performFcn = 'crossentropy';
     net.trainParam.epochs = 1200;
@@ -48,7 +48,7 @@ if trainNet
     [net,tr] = train(net,x_train,train_labels);
     
 else
-    net = load('models\task_1_v2.mat').net;
+    net = load('models\task_1_v3.mat').net;
 end
 
 
