@@ -27,8 +27,8 @@ x_train = sample_array;
 train_labels = source_labels'; 
 % addign the name 'train' to your variables can make it easier to determine which matrix you're working with once you start including a test set
 
-hiddenLayer1Size = 40; % total number of nodes in the hidden layer 1
-hiddenLayer2Size = 20; % total number of nodes in the hidden layer 2
+hiddenLayer1Size = 64; % total number of nodes in the hidden layer 1
+hiddenLayer2Size = 24; % total number of nodes in the hidden layer 2
 
 trainNet = 1;
 
@@ -48,7 +48,7 @@ if trainNet
     [net,tr] = train(net,x_train,train_labels);
     
 else
-    net = load('models\task_1_v1.mat').net;
+    net = load('models\task_1_v2.mat').net;
 end
 
 
@@ -76,7 +76,7 @@ roc_auc_scores = zeros(1, 26);
 for i = 1 : 26
     roc_auc_scores(1, i) = trapz(fpr{i}, tpr{i});
 end
-Avg
+
 avg_auc = mean(roc_auc_scores);
 disp(avg_auc);
 
@@ -87,4 +87,4 @@ ylabel('ROC AUC');
 
 bar(roc_auc_scores);
 
-save('models\task_1_v2.mat', 'net');
+save('models\task_1_v3.mat', 'net');
