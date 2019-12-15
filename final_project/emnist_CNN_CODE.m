@@ -73,7 +73,7 @@ layers(15).Name = 'Class_Out';
 analyzeNetwork(layers)%generate a visual of the model for inspection
 
 %tell the training system what parameters our model will use
-ooptions = trainingOptions('adam', ... %change the learing method
+options = trainingOptions('adam', ... %change the learing method
     'InitialLearnRate',0.01, ... %base learning rate
     'LearnRateSchedule','piecewise', ... %allows the learning rate to be reducecd on a schedule (start fast and slow down for more refined (smaller) steps)
     'LearnRateDropPeriod',1, ... %how many epocs before learning rate reduces 
@@ -98,3 +98,5 @@ YPred = classify(trainedNet,Test);
 YValidation = Test.Labels;
 
 accuracy = sum(YPred == YValidation)/numel(YValidation)
+
+save('models/task_2_v1.mat', 'trainedNet');
