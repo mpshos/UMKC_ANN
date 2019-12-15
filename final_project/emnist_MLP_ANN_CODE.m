@@ -30,20 +30,26 @@ train_labels = source_labels';
 hiddenLayer1Size = 40; % total number of nodes in the hidden layer 1
 hiddenLayer2Size = 20; % total number of nodes in the hidden layer 2
 
-% create a FitNet Feedforward Network
-net = patternnet([hiddenLayer1Size hiddenLayer2Size],'trainrp');
+trainNet = 1;
 
-% division of the inputdata is done automatically in this configuration
-net.divideParam.trainRatio = 60/100;
-net.divideParam.valRatio = 25/100;
-net.divideParam.testRatio = 15/100;
-net.performFcn = 'crossentropy';
-net.trainParam.epochs = 1200;
+if trainNet
+    % create a FitNet Feedforward Network
+    net = patternnet([hiddenLayer1Size hiddenLayer2Size],'trainrp');
 
-[net,tr] = train(net,x_train,train_labels);
+    % division of the inputdata is done automatically in this configuration
+    net.divideParam.trainRatio = 60/100;
+    net.divideParam.valRatio = 25/100;
+    net.divideParam.testRatio = 15/100;
+    net.performFcn = 'crossentropy';
+    net.trainParam.epochs = 1200;
 
-%use the train function to learn the lables of the images in the mnist data set
-%we pass the 'net' structure we've built above along with the x_train(sample_array) and train-labels (source_labels^Transpose) 
+    %use the train function to learn the lables of the images in the mnist data set
+    %we pass the 'net' structure we've built above along with the x_train(sample_array) and train-labels (source_labels^Transpose) 
+    [net,tr] = train(net,x_train,train_labels);
+    
+else
+    net = load('models\task_1_v1.mat').net;
+end
 
 
 %% DISPLAY DATA
@@ -57,3 +63,28 @@ for i = 1:36                                    % preview first 36 samples
     imagesc(digit)                              % show the image
     title(num2str(labels(i)))                   % show the label above each cell of the plot
 end
+
+%% Display ROC scores
+preds = sim(net, x_train);
+
+figure(2)
+plotroc(train_labels, preds);
+
+[tpr, fpr, thresholds] = roc(train_labels, preds);
+roc_auc_scores = zeros(1, 26);
+
+for i = 1 : 26
+    roc_auc_scores(1, i) = trapz(fpr{i}, tpr{i});
+end
+Avg
+avg_auc = mean(roc_auc_scores);
+disp(avg_auc);
+
+figure(3)
+title('ROC AUC per class');
+xlabel('Class');
+ylabel('ROC AUC');
+
+bar(roc_auc_scores);
+
+save('models\task_1_v2.mat', 'net');
