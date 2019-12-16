@@ -27,11 +27,11 @@ x_train = sample_array;
 train_labels = source_labels'; 
 % addign the name 'train' to your variables can make it easier to determine which matrix you're working with once you start including a test set
 
-hiddenLayer1Size = 40; % total number of nodes in the hidden layer 1
-hiddenLayer2Size = 20; % total number of nodes in the hidden layer 2
+hiddenLayer1Size = 64; % total number of nodes in the hidden layer 1
+hiddenLayer2Size = 32; % total number of nodes in the hidden layer 2
 
 % create a FitNet Feedforward Network
-net = patternnet([hiddenLayer1Size hiddenLayer2Size],'trainrp');
+net = patternnet([hiddenLayer1Size hiddenLayer2Size, 26],'trainrp');
 
 % division of the inputdata is done automatically in this configuration
 net.divideParam.trainRatio = 60/100;
@@ -81,4 +81,4 @@ ylabel('ROC AUC');
 
 bar(roc_auc_scores);
 
-save('models\fashion_task_3_v1.mat', 'net');
+save('models\fashion_task_3_v3.mat', 'net');
