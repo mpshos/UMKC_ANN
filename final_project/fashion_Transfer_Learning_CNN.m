@@ -8,6 +8,9 @@
 % ones which can be use to fine tune a model to new data, or test the model on 
 % different data with different labels
 
+% Load best Task 2 network
+trainedNet = load('models/task_2_v3.mat').trainedNet;
+
 %% FASHION_MNIST DATASET IMPORT
 training_size = 60000; %The FASHION_MNIST data set size
 
@@ -89,3 +92,5 @@ YPred = classify(new_trainedNet,New_Test);
 YValidation = New_Test.Labels;
 
 accuracy = sum(YPred == YValidation)/numel(YValidation)
+
+save('models/task_5_v1.mat', 'trainedNet');
