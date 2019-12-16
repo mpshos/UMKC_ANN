@@ -8,6 +8,8 @@
 % ones which can be use to fine tune a model to new data, or test the model on 
 % different data with different labels
 
+% Load best Task 3 network
+trainedNet = load('models/task_3_v3.mat').trainedNet;
 
 %% EMNIST_LETTERS DATASET IMPORT
 letter_training_size = 124800; %The EMNIST_LETTERS dataset contains 145,600 samples, but only 124800 are part of the training set
@@ -90,3 +92,5 @@ YPred = classify(new_trainedNet,New_Test);
 YValidation = New_Test.Labels;
 
 accuracy = sum(YPred == YValidation)/numel(YValidation)
+
+save('models/task_4_v1.mat', 'trainedNet');
