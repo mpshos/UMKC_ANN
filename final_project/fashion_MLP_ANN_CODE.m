@@ -49,7 +49,7 @@ net.trainParam.epochs = 1200;
 %% DISPLAY DATA
 % This is the functio we used in class to show the samples as images -> the labels are shown in decimal form (updated)  
 
-figure                                          % initialize figure
+figure(1)                                       % initialize figure
 colormap(gray)                                  % set to grayscale
 for i = 1:36                                    % preview first 36 samples
     subplot(6,6,i)                              % plot them in 6 x 6 grid
@@ -57,3 +57,28 @@ for i = 1:36                                    % preview first 36 samples
     imagesc(digit)                              % show the image
     title(num2str(labels(i)))                   % show the label above each cell of the plot
 end
+
+%% Display ROC scores
+preds = sim(net, x_train);
+
+figure(2)
+plotroc(train_labels, preds);
+
+[tpr, fpr, thresholds] = roc(train_labels, preds);
+roc_auc_scores = zeros(1, 10);
+
+for i = 1 : 10
+    roc_auc_scores(1, i) = trapz(fpr{i}, tpr{i});
+end
+
+avg_auc = mean(roc_auc_scores);
+disp(avg_auc);
+
+figure(3)
+title('ROC AUC per class');
+xlabel('Class');
+ylabel('ROC AUC');
+
+bar(roc_auc_scores);
+
+save('models\fashion_task_3_v1.mat', 'net');
