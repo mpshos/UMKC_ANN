@@ -28,7 +28,7 @@ Test.Labels = categorical(Test.Labels);
 layers = [
     imageInputLayer([28 28 1]) %the array passed here needs to be the size of the input sample 28x28 and 1 means its a flat (2D) array
     %start block 1
-    convolution2dLayer(7,8,'Padding','same')%create a 2D conv layer 
+    convolution2dLayer(7,16,'Padding','same')%create a 2D conv layer 
     batchNormalizationLayer %create a layer to reduce sample variance -- 'normalize' the updates for the batch 
     reluLayer %create a ReLU layer 
     
@@ -36,7 +36,7 @@ layers = [
     %end block 1
 
     %start block 2
-    convolution2dLayer(5,16,'Padding','same')
+    convolution2dLayer(5,24,'Padding','same')
     batchNormalizationLayer
     reluLayer
     
@@ -44,7 +44,7 @@ layers = [
     %end block 2
     
     %start block 3
-    convolution2dLayer(3,32,'Padding','same')
+    convolution2dLayer(3,48,'Padding','same')
     batchNormalizationLayer
     reluLayer
     %end block 3
