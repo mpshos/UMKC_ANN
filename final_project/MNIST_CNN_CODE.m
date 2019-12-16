@@ -90,3 +90,5 @@ YPred = classify(trainedNet,Digits_Test);
 YValidation = Digits_Test.Labels;
 
 accuracy = sum(YPred == YValidation)/numel(YValidation)
+
+save('models/task_3_v2.mat', 'trainedNet');
