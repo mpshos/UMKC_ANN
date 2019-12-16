@@ -10,7 +10,7 @@ Digits_Train = [Digits_Train table(Digits_labels)];%concatinate the table with t
 Digits_Train.Properties.VariableNames{2} = 'Labels'; %change the variable name of the lable data
 Digits_Train.Labels = categorical(Digits_Train.Labels); %convert the numerical lables to categorical labels (matlab internal requirment for classification layer)
 
-split_ratio = 0.6;
+split_ratio = 0.8;
 %generate a training and validation split for the training data above
 ranRows = randperm(training_size);%randomly permute the labels of the training data
 %for *repeatability* you can generate this only once if you prefer to use the same subset for any comparison
@@ -32,7 +32,7 @@ layers = [
     batchNormalizationLayer %create a layer to reduce sample variance -- 'normalize' the updates for the batch 
     reluLayer %create a ReLU layer 
     
-    maxPooling2dLayer(2,'Stride',2) %pooling reduces the size of the feature tensor you send to the next layer
+    maxPooling2dLayer(2,'Stride',2) %0.2pooling reduces the size of the feature tensor you send to the next layer
     %end block 1
 
     %start block 2
@@ -91,4 +91,4 @@ YValidation = Digits_Test.Labels;
 
 accuracy = sum(YPred == YValidation)/numel(YValidation)
 
-save('models/task_3_v2.mat', 'trainedNet');
+save('models/task_3_v3.mat', 'trainedNet');
