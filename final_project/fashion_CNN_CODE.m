@@ -90,3 +90,5 @@ YPred = classify(trainedNet,Clothes_Test);
 YValidation = Clothes_Test.Labels;
 
 accuracy = sum(YPred == YValidation)/numel(YValidation)
+
+save('models/fashion_task_1_v2.mat', 'trainedNet');
